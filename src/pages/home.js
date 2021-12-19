@@ -21,7 +21,7 @@ export async function getServerSideProps(){
   }
 
 }
-export default function Home({data}) {
+function Home({data}) {
 //theme
 const [isMounted, setIsMounted] = useState(false)
   const darkmode = useDarkMode(true)
@@ -39,12 +39,14 @@ const [isMounted, setIsMounted] = useState(false)
     ...info,
     current: defaultEndpoint
   });
-  
-//   const [epsodeSearched, setEpsodeSearched] =useState("")
-//   const [getEpsode,{data,error}] = useLazyQuery(GET_EPSODES_QUERY,{
-//     variables:{name:citySearched}
-// });
-// if(error) return <h3>error found</h3>;
+
+  //
+  const [epsodeSearched, setEpsodeSearched] =useState("")
+  const [getEpsode,{epsode,error}] = useLazyQuery(GET_EPSODES_QUERY,{
+    variables:{name:epsodeSearched}
+});
+if(error) return <h3>error found</h3>;
+
 
   const { current } = page;
 
@@ -99,7 +101,6 @@ function handleOnSubmitSearch(e) {
     current: endpoint
   });
 }
-
   return (
     
     <div className="container">
@@ -121,15 +122,14 @@ function handleOnSubmitSearch(e) {
         
 
         <form className="search" onSubmit={handleOnSubmitSearch}>
-          <input name="query" type="search" placeholder='Search Character' />
+          <input name="query" type="search" placeholder='Search Character' onChange={(event)=>{setEpsodeSearched(event.target.value)}}/>
+          <button onClick={()=>getEpsode()}>Search</button>
+        </form>      
+        <br/>
           <ThemeProvider theme={theme}>
            <GlobalStyles className="swi" />
            <button className="swi" onClick={darkmode.toggle}>Switch Mode</button>           
          </ThemeProvider>
-       
-      </form>   
-      
-        <hr/>
          
         <ul className="grid">
             {results.map(result => {
@@ -271,16 +271,8 @@ function handleOnSubmitSearch(e) {
         `}
       </style>
 
-      {/* <footer className="footer">
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{'next.js and graphql '}
-         
-        </a>
-      </footer> */}
     </div>
   )
 }
+
+export default Home;
