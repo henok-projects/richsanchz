@@ -86,7 +86,7 @@ function handleOnSubmitSearch(e) {
 
       <main className="main">
 
-       <form className="search" onSubmit={handleOnSubmitSearch}>
+        <form className="search" onSubmit={handleOnSubmitSearch}>
           <input name="query" type="search" />
           <button>Search</button>
         </form>      
@@ -112,6 +112,8 @@ function handleOnSubmitSearch(e) {
       <style jsx>
         {`
         .container{
+          min-height: 100vh;
+          
 
         }
         .grid{
