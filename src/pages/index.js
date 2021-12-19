@@ -9,6 +9,7 @@ import { useLazyQuery } from '@apollo/client'
 import { lightTheme, darkTheme, GlobalStyles } from "./character/ThemeConfig"
 import useDarkMode from "use-dark-mode"
 import {GET_EPSODES_QUERY} from '../graphql/Queries'
+import SearchRounded from "@material-ui/icons/SearchRounded";
 
 const defaultEndpoint = 'https://rickandmortyapi.com/api/character/';
 export async function getServerSideProps(){
@@ -31,9 +32,7 @@ const [isMounted, setIsMounted] = useState(false)
     setIsMounted(true)
   }, [])
 
-
-
-  const { info, results: defaultResults = [] } = data;
+  const { info,origin,species, results: defaultResults = [] } = data;
   const [results, updateResults] = useState(defaultResults);
   const [page, updatePage] = useState({
     ...info,
@@ -114,14 +113,11 @@ function handleOnSubmitSearch(e) {
        
       <div className="main">
      
-      {/* <div className="wrapper">
-      <SearchRounded color="inherit" />
-      <input className="" />
-    </div> */}
-        
+           
 
         <form className="search" onSubmit={handleOnSubmitSearch}>
-          <input name="query" type="search" placeholder='Search Character' />
+          <SearchRounded className="wrapper" color="inherit" />
+          <input className='input' name="query" type="search" placeholder='Search Character' />
           <ThemeProvider theme={theme}>
            <GlobalStyles className="swi" />
            <button className="swi" onClick={darkmode.toggle}>Switch Mode</button>           
@@ -189,7 +185,16 @@ function handleOnSubmitSearch(e) {
         justify-content: center;
         align-items: center;
       }
-
+   
+      .input {
+        border: none;
+        background-color: #f0f0f5da;
+        padding: 10px;
+        width: 70%;
+        height: 100%;
+        
+        outline: none;
+      }
 
         .grid{
           list-style: none;
@@ -243,8 +248,9 @@ function handleOnSubmitSearch(e) {
       }
       .search input {
         margin-right: .3em;
-        width:300px;
-        height: 28px;
+        width:400px;
+        height: 30px;
+        border-radius: 18px;
 
       }
       
